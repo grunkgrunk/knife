@@ -84,6 +84,30 @@ The API consists of a single function named `System`.
   The underscore prefix is reserved for pseudo-components and should not
   be used for regular components.
 
+  **accessing pseudo-components**
+    
+  If for instance you would like to access the entity that is currently 
+  being processed by one of your systems you would have to do something
+  like this:
+  
+  ```lua
+  local makeHappiness = System(
+      { '_entity' },
+      function (e)
+          if e.rainbow then
+            print(e.rainbow)
+          end
+      end)
+    
+  function love.update (dt)
+      for i = #entities, 1, -1 do
+          makeHappiness(entities[i])
+      end
+  end
+  ```
+  When entities are being processed by this system, their "rainbow" variable will be printed
+  if the entity has such a variable.
+
   **choices**
 
   An aspect may contain several component keys delimited by pipe characters,
